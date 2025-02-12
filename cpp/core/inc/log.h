@@ -1,5 +1,7 @@
 #pragma once
 
+// Standard library
+#include <mutex>
 #include <string>
 
 namespace zbreakout::core::log
@@ -16,6 +18,7 @@ public:
 
 private:
     std::ostream& m_stream;
+    std::mutex m_logMutex;
 };
 
 }
