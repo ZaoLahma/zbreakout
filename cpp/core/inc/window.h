@@ -23,7 +23,11 @@ public:
     Window() = delete;
     Window(core::log::Log& log, core::message_broker::MessageBroker& messageBroker);
 
-    void createWindow(const std::string& title, const resolution& resolution);
+    SDL_Window* createWindow(const std::string& title, const resolution& resolution);
+
+    /**
+     * Handle SDL events - Must be executed in the main thread
+     */
     void handleSDLEvents();
 
 private:

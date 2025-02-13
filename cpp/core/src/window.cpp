@@ -11,19 +11,22 @@ namespace zbreakout::core::window
 Window::Window(core::log::Log& log, core::message_broker::MessageBroker& messageBroker) : m_log(log), m_messageBroker(messageBroker)
 {
     SDL_Init(SDL_INIT_VIDEO);
+
+    m_log.info(__func__, "SDL initialized");
 }
 
-void Window::createWindow(const std::string& title, const resolution& resolution)
+SDL_Window* Window::createWindow(const std::string& title, const resolution& resolution)
 {
     m_window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, resolution.width, resolution.height, 0);
 
     if (m_window == nullptr)
     {
         m_log.error(__func__, "Failed to create window");
-        return;
     }
 
     m_log.info(__func__, "Window created with title \"" + title + "\" and resolution " + std::to_string(resolution.width) + "x" + std::to_string(resolution.height));
+
+    return m_window;
 }
 
 void Window::handleSDLEvents()
@@ -47,7 +50,6 @@ void Window::handleSDLEvents()
             {
                 case SDL_QUIT:
                 case SDL_WINDOWEVENT_CLOSE:
-                    SDL_Quit();
                     m_log.info(__func__, "Window closed");
                     m_messageBroker.sendMessage(std::make_shared<GameQuitMessage>());
                     continueRunning = false;
@@ -73,6 +75,8 @@ void Window::handleSDLEvents()
             break;
         }
     }
+
+    SDL_Quit();
 }
 
 }

@@ -24,7 +24,7 @@ class MessageBroker
 {
 public:
     MessageBroker() = delete;
-    MessageBroker(core::log::Log& log ) : m_log(log) {}
+    MessageBroker(core::log::Log& log) : m_log(log) {}
     virtual ~MessageBroker() = default;
 
     void subscribeToMessageType(const std::type_index& type, std::function<void(std::shared_ptr<MessageBase>)> callback);
