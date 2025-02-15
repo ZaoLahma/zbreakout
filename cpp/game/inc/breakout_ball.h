@@ -5,37 +5,28 @@
 #include "window.h"
 
 // Standard library
-#include <cstdint>
 #include <memory>
 
-namespace zbreakout::game::breakout_paddle
+namespace zbreakout::game::breakout_ball
 {
 
-constexpr uint8_t PADDLE_WIDTH {75};
-constexpr uint8_t PADDLE_HEIGHT {10};
-
-enum class PaddleDirection : uint8_t
-{
-    LEFT,
-    RIGHT,
-    NONE
-};
-
-class BreakoutPaddle
+class BreakoutBall
 {
 public:
-    BreakoutPaddle(
+    BreakoutBall(
         zbreakout::core::log::Log& log,
         std::shared_ptr<zbreakout::core::renderer::Renderer> renderer,
         const zbreakout::core::window::Resolution& resolution);
-    ~BreakoutPaddle() = default;
-
-    zbreakout::core::renderer::ScreenPosition getPosition() const { return m_position; }
-    zbreakout::core::renderer::ScreenPosition getPaddleSize() const { return {PADDLE_WIDTH, PADDLE_HEIGHT}; }
-
-    void handleInput(const PaddleDirection& direction);
+    ~BreakoutBall() = default;
 
     void render();
+
+    void handlePaddleCollision();
+
+    zbreakout::core::renderer::ScreenPosition getPosition() const { return m_position; }
+    zbreakout::core::renderer::ScreenPosition getAcceleration() const { return m_acceleration; }
+    uint32_t getBallRadius() const { return m_ballRadius; }
+
 private:
     void updatePosition();
 
@@ -44,8 +35,8 @@ private:
     const zbreakout::core::window::Resolution m_resolution;
 
     zbreakout::core::renderer::ScreenPosition m_position;
-    PaddleDirection m_direction {PaddleDirection::NONE};
     zbreakout::core::renderer::ScreenPosition m_acceleration {0, 0};
+    uint32_t m_ballRadius {10};
 };
 
 }

@@ -35,7 +35,23 @@ public:
     Renderer() = default;
     virtual ~Renderer() = default;
 
+    /**
+     * Draw a filled circle
+     *
+     * @param position The center of the circle
+     * @param radius The radius of the circle
+     * @param color The color of the circle
+     */
     virtual void fillCircle(const ScreenPosition& position, int radius, const Color& color) = 0;
+
+    /**
+     * Draw a filled rectangle
+     *
+     * @param position The top left corner of the rectangle
+     * @param width The width of the rectangle
+     * @param height The height of the rectangle
+     * @param color The color of the rectangle
+     */
     virtual void fillRectangle(const ScreenPosition& position, int width, int height, const Color& color) = 0;
 };
 

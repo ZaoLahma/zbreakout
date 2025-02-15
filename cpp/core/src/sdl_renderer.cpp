@@ -44,15 +44,18 @@ void SDLRenderer::fillCircle(const core::renderer::ScreenPosition& position, int
 
     const uint32_t fullCirleDegrees {360};
 
-    for (uint32_t degrees {0}; degrees < fullCirleDegrees; ++degrees)
+    for (uint32_t sweep {0}; sweep < radius; ++sweep)
     {
-        const double angle {2 * M_PI * degrees / fullCirleDegrees};
-        const int x {static_cast<int>(position.x + radius * cos(angle))};
-        const int y {static_cast<int>(position.y + radius * sin(angle))};
-        
-        if (SDL_RenderDrawPoint(s_sdlRenderer, x, y) != 0)
+        for (uint32_t degrees {0}; degrees < fullCirleDegrees; ++degrees)
         {
-            m_log.error(__func__, "Failed to draw circle: " + std::string(SDL_GetError()));
+            const double angle {2 * M_PI * degrees / fullCirleDegrees};
+            const int x {static_cast<int>(position.x + sweep * cos(angle))};
+            const int y {static_cast<int>(position.y + sweep * sin(angle))};
+            
+            if (SDL_RenderDrawPoint(s_sdlRenderer, x, y) != 0)
+            {
+                m_log.error(__func__, "Failed to draw circle: " + std::string(SDL_GetError()));
+            }
         }
     }
 }
@@ -72,12 +75,8 @@ void SDLRenderer::fillRectangle(const core::renderer::ScreenPosition& position, 
 
 void SDLRenderer::renderFrame()
 {
-    // Keep here
     SDL_SetRenderTarget(s_sdlRenderer, nullptr);
     SDL_RenderCopy(s_sdlRenderer, m_sdlTexture, nullptr, nullptr);
-
-    // Move to layered renderer
-    SDL_RenderPresent(s_sdlRenderer);
 
     // TODO: Check how to properly clear the screen between frames
     SDL_SetRenderTarget(s_sdlRenderer, m_sdlTexture);

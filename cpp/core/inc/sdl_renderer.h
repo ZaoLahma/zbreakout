@@ -20,6 +20,8 @@ public:
 
     void renderFrame() override;
 
+    SDL_Renderer* getSDLRenderer() { return s_sdlRenderer; }
+
 private:
     static void initializeSDLRenderer(zbreakout::core::sdl_window::SDLWindow& window);
 

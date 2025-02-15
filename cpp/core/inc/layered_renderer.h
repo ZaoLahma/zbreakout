@@ -20,7 +20,7 @@ public:
     void renderFrame() override
     {
         // Render sorted by layer
-        for (const auto& [layer, renderer] : m_renderers)
+        for (const auto& [layer, renderer] : m_layerRenderers)
         {
             renderer->renderFrame();
         }
@@ -35,16 +35,16 @@ public:
 
     std::optional<std::shared_ptr<renderer::Renderer>> getRendererForLayer(uint32_t layer)
     {
-        if (m_renderers.find(layer) != m_renderers.end())
+        if (m_layerRenderers.find(layer) != m_layerRenderers.end())
         {
-            return m_renderers[layer];
+            return m_layerRenderers[layer];
         }
         return {};
     }
 
 protected:
 
-    std::map<uint32_t /*layer*/, std::shared_ptr<renderer::Renderer>> m_renderers;
+    std::map<uint32_t /*layer*/, std::shared_ptr<renderer::Renderer>> m_layerRenderers;
 };
 
 }
