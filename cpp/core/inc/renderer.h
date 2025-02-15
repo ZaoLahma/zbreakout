@@ -23,8 +23,8 @@ public:
     Renderer() = default;
     virtual ~Renderer() = default;
 
-    virtual void drawCircle(const ScreenPosition& position, int radius, const Color& color) = 0;
-    virtual void drawRectangle(const ScreenPosition& position, int width, int height, const Color& color) = 0;
+    virtual void fillCircle(const ScreenPosition& position, int radius, const Color& color) = 0;
+    virtual void fillRectangle(const ScreenPosition& position, int width, int height, const Color& color) = 0;
 
     /**
      * Call once per frame to render the scene

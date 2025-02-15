@@ -3,18 +3,10 @@
 #include "message_broker.h"
 #include "log.h"
 #include "renderer.h"
-
-// Standard library
-#include <thread>
+#include "window.h"
 
 namespace zbreakout::core::engine
 {
-
-class GameQuitMessage : public zbreakout::core::message_broker::MessageBase
-{
-public:
-    GameQuitMessage() = default;
-};
 
 class EngineApp
 {
@@ -38,7 +30,12 @@ class Engine
 {
 public:
     Engine() = delete;
-    Engine(zbreakout::core::log::Log& log, zbreakout::core::message_broker::MessageBroker& messageBroker, zbreakout::core::renderer::Renderer& renderer, EngineApp& engineApp);
+    Engine(
+        zbreakout::core::log::Log& log,
+        zbreakout::core::window::Window& window,
+        zbreakout::core::message_broker::MessageBroker& messageBroker,
+        zbreakout::core::renderer::Renderer& renderer,
+        EngineApp& engineApp);
     ~Engine();
 
     void start();
@@ -48,13 +45,12 @@ private:
     void processMessage(std::shared_ptr<zbreakout::core::message_broker::MessageBase> message);
 
     zbreakout::core::log::Log& m_log;
+    zbreakout::core::window::Window& m_window;
     zbreakout::core::message_broker::MessageBroker& m_messageBroker;
     zbreakout::core::renderer::Renderer& m_renderer;
     EngineApp& m_engineApp;
-    bool m_running;
 
-    // Game thread
-    std::thread m_gameThread;
+    bool m_running;
 };
 
 }

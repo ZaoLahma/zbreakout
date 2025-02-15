@@ -14,11 +14,9 @@ Breakout::Breakout(
 
 void Breakout::run()
 {
-    m_renderer.drawRectangle({100, 100}, 50, 50, {255, 0, 0, 255});
-    m_renderer.drawRectangle({200, 200}, 50, 50, {0, 255, 0, 255});
-    m_renderer.drawRectangle({300, 300}, 50, 50, {0, 0, 255, 255});
-
-    m_log.info(__func__, "Running game");
+    m_renderer.fillRectangle({100, 100}, 50, 50, {255, 0, 0, 255});
+    m_renderer.fillRectangle({200, 200}, 50, 50, {0, 255, 0, 255});
+    m_renderer.fillRectangle({300, 300}, 50, 50, {0, 0, 255, 255});
 }
 
 }

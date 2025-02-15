@@ -14,8 +14,8 @@ class SDLRenderer : public zbreakout::core::renderer::Renderer
 public:
     SDLRenderer(zbreakout::core::log::Log& log, SDL_Window* window);
     ~SDLRenderer() = default;
-    void drawCircle(const core::renderer::ScreenPosition& position, int radius, const core::renderer::Color& color) override;
-    void drawRectangle(const core::renderer::ScreenPosition& position, int width, int height, const core::renderer::Color& color) override;
+    void fillCircle(const core::renderer::ScreenPosition& position, int radius, const core::renderer::Color& color) override;
+    void fillRectangle(const core::renderer::ScreenPosition& position, int width, int height, const core::renderer::Color& color) override;
 
     void renderScene() override;
 

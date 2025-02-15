@@ -11,7 +11,7 @@ SDLRenderer::SDLRenderer(zbreakout::core::log::Log& log, SDL_Window* window) : m
 {
 }
 
-void SDLRenderer::drawCircle(const core::renderer::ScreenPosition& position, int radius, const core::renderer::Color& color)
+void SDLRenderer::fillCircle(const core::renderer::ScreenPosition& position, int radius, const core::renderer::Color& color)
 {
     SDL_SetRenderDrawColor(m_sdlRenderer, color.r, color.g, color.b, color.a);
 
@@ -22,17 +22,23 @@ void SDLRenderer::drawCircle(const core::renderer::ScreenPosition& position, int
         const double angle {2 * M_PI * degrees / fullCirleDegrees};
         const int x {static_cast<int>(position.x + radius * cos(angle))};
         const int y {static_cast<int>(position.y + radius * sin(angle))};
-        SDL_RenderDrawPoint(m_sdlRenderer, x, y);
+        
+        if (SDL_RenderDrawPoint(m_sdlRenderer, x, y) != 0)
+        {
+            m_log.error(__func__, "Failed to draw circle: " + std::string(SDL_GetError()));
+        }
     }
-
-    m_log.info(__func__, "Error: " + std::string(SDL_GetError()));
 }
 
-void SDLRenderer::drawRectangle(const core::renderer::ScreenPosition& position, int width, int height, const core::renderer::Color& color)
+void SDLRenderer::fillRectangle(const core::renderer::ScreenPosition& position, int width, int height, const core::renderer::Color& color)
 {
     SDL_SetRenderDrawColor(m_sdlRenderer, color.r, color.g, color.b, color.a);
     SDL_Rect rect {position.x, position.y, width, height};
-    SDL_RenderFillRect(m_sdlRenderer, &rect);
+    
+    if (SDL_RenderFillRect(m_sdlRenderer, &rect) != 0)
+    {
+        m_log.error(__func__, "Failed to draw rectangle: " + std::string(SDL_GetError()));
+    }
 }
 
 void SDLRenderer::renderScene()
