@@ -14,8 +14,7 @@ public:
     EngineApp() = delete;
     EngineApp(
         zbreakout::core::log::Log& log,
-        zbreakout::core::message_broker::MessageBroker& messageBroker,
-        zbreakout::core::renderer::Renderer& renderer) : m_log(log), m_messageBroker(messageBroker), m_renderer(renderer) {}
+        zbreakout::core::message_broker::MessageBroker& messageBroker) : m_log(log), m_messageBroker(messageBroker) {}
 
     ~EngineApp() = default;
     
@@ -23,7 +22,6 @@ public:
 protected:
     zbreakout::core::log::Log& m_log;
     zbreakout::core::message_broker::MessageBroker& m_messageBroker;
-    zbreakout::core::renderer::Renderer& m_renderer;
 };
 
 class Engine
@@ -34,7 +32,7 @@ public:
         zbreakout::core::log::Log& log,
         zbreakout::core::window::Window& window,
         zbreakout::core::message_broker::MessageBroker& messageBroker,
-        zbreakout::core::renderer::Renderer& renderer,
+        zbreakout::core::renderer::SceneRenderer& renderer,
         EngineApp& engineApp);
     ~Engine();
 
@@ -47,7 +45,7 @@ private:
     zbreakout::core::log::Log& m_log;
     zbreakout::core::window::Window& m_window;
     zbreakout::core::message_broker::MessageBroker& m_messageBroker;
-    zbreakout::core::renderer::Renderer& m_renderer;
+    zbreakout::core::renderer::SceneRenderer& m_renderer;
     EngineApp& m_engineApp;
 
     bool m_running;

@@ -17,7 +17,19 @@ struct Color
     int a {255};
 };
 
-class Renderer
+class SceneRenderer
+{
+public:
+    SceneRenderer() = default;
+    virtual ~SceneRenderer() = default;
+
+    /**
+     * Call once per frame to render the scene
+     */
+     virtual void renderScene() = 0;
+};
+
+class Renderer : public SceneRenderer
 {
 public:
     Renderer() = default;
@@ -25,11 +37,6 @@ public:
 
     virtual void fillCircle(const ScreenPosition& position, int radius, const Color& color) = 0;
     virtual void fillRectangle(const ScreenPosition& position, int width, int height, const Color& color) = 0;
-
-    /**
-     * Call once per frame to render the scene
-     */
-    virtual void renderScene() = 0;
 };
 
 }

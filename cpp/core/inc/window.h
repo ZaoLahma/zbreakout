@@ -20,7 +20,15 @@ public:
 class Window
 {
 public:
+    Window() = delete;
+    Window(const Resolution& resolution) : m_windowResolution(resolution) {}
+
     virtual void handleWindowEvents() = 0;
+
+    Resolution getWindowResolution() const { return m_windowResolution; }
+
+private:
+    Resolution m_windowResolution;
 };
 
 }

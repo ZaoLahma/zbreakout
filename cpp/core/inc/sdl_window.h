@@ -16,10 +16,10 @@ class SDLWindow : public core::window::Window
 {
 public:
     SDLWindow() = delete;
-    SDLWindow(core::log::Log& log, core::message_broker::MessageBroker& messageBroker);
+    SDLWindow(core::log::Log& log, const std::string& title, const core::window::Resolution& resolution, core::message_broker::MessageBroker& messageBroker);
     ~SDLWindow();
 
-    SDL_Window* createWindow(const std::string& title, const core::window::Resolution& resolution);
+    SDL_Window* getSDLWindow() const { return m_window; }
 
     void handleWindowEvents() override;
 

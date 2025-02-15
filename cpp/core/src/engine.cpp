@@ -6,7 +6,7 @@ Engine::Engine(
     core::log::Log& log,
     core::window::Window& window,
     core::message_broker::MessageBroker& messageBroker,
-    core::renderer::Renderer& renderer, EngineApp& engineApp) :
+    core::renderer::SceneRenderer& renderer, EngineApp& engineApp) :
         m_log(log), m_window(window),
         m_messageBroker(messageBroker), m_renderer(renderer),
         m_engineApp(engineApp), m_running(false)

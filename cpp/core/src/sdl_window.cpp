@@ -9,11 +9,26 @@
 namespace zbreakout::core::sdl_window
 {
 
-SDLWindow::SDLWindow(core::log::Log& log, core::message_broker::MessageBroker& messageBroker) : m_log(log), m_messageBroker(messageBroker)
+SDLWindow::SDLWindow(
+    core::log::Log& log,
+    const std::string& title,
+    const core::window::Resolution& resolution,
+    core::message_broker::MessageBroker& messageBroker) : Window(resolution), m_log(log), m_messageBroker(messageBroker)
 {
     SDL_Init(SDL_INIT_VIDEO);
 
     m_log.info(__func__, "SDL initialized");
+
+    m_window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, resolution.width, resolution.height, 0);
+
+    if (m_window == nullptr)
+    {
+        m_log.error(__func__, "Failed to create window");
+    }
+    else
+    {
+        m_log.info(__func__, "Window created with title \"" + title + "\" and resolution " + std::to_string(resolution.width) + "x" + std::to_string(resolution.height));    
+    }
 }
 
 SDLWindow::~SDLWindow()
@@ -21,20 +36,6 @@ SDLWindow::~SDLWindow()
     SDL_Quit();
 
     m_log.info(__func__, "SDL quit");
-}
-
-SDL_Window* SDLWindow::createWindow(const std::string& title, const core::window::Resolution& resolution)
-{
-    m_window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, resolution.width, resolution.height, 0);
-
-    if (m_window == nullptr)
-    {
-        m_log.error(__func__, "Failed to create window");
-    }
-
-    m_log.info(__func__, "Window created with title \"" + title + "\" and resolution " + std::to_string(resolution.width) + "x" + std::to_string(resolution.height));
-
-    return m_window;
 }
 
 void SDLWindow::handleWindowEvents()
