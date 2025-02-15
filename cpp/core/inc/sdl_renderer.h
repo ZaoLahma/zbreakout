@@ -18,7 +18,7 @@ public:
     void fillCircle(const core::renderer::ScreenPosition& position, int radius, const core::renderer::Color& color) override;
     void fillRectangle(const core::renderer::ScreenPosition& position, int width, int height, const core::renderer::Color& color) override;
 
-    void renderScene() override;
+    void renderFrame() override;
 
 private:
     static void initializeRenderer(zbreakout::core::sdl_window::SDLWindow& window);

@@ -32,7 +32,7 @@ public:
         zbreakout::core::log::Log& log,
         zbreakout::core::window::Window& window,
         zbreakout::core::message_broker::MessageBroker& messageBroker,
-        zbreakout::core::renderer::SceneRenderer& renderer,
+        zbreakout::core::renderer::FrameRenderer& renderer,
         EngineApp& engineApp);
     ~Engine();
 
@@ -45,7 +45,7 @@ private:
     zbreakout::core::log::Log& m_log;
     zbreakout::core::window::Window& m_window;
     zbreakout::core::message_broker::MessageBroker& m_messageBroker;
-    zbreakout::core::renderer::SceneRenderer& m_renderer;
+    zbreakout::core::renderer::FrameRenderer& m_renderer;
     EngineApp& m_engineApp;
 
     bool m_running;

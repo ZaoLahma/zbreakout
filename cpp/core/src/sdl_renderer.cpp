@@ -69,7 +69,7 @@ void SDLRenderer::fillRectangle(const core::renderer::ScreenPosition& position, 
     }
 }
 
-void SDLRenderer::renderScene()
+void SDLRenderer::renderFrame()
 {
     SDL_SetRenderTarget(s_sdlRenderer, nullptr);
 

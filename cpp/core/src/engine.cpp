@@ -6,7 +6,7 @@ Engine::Engine(
     core::log::Log& log,
     core::window::Window& window,
     core::message_broker::MessageBroker& messageBroker,
-    core::renderer::SceneRenderer& renderer, EngineApp& engineApp) :
+    core::renderer::FrameRenderer& renderer, EngineApp& engineApp) :
         m_log(log), m_window(window),
         m_messageBroker(messageBroker), m_renderer(renderer),
         m_engineApp(engineApp), m_running(false)
@@ -38,7 +38,7 @@ void Engine::run()
         }
 
         m_engineApp.run();
-        m_renderer.renderScene();
+        m_renderer.renderFrame();
     }
 }
 

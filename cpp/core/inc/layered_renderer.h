@@ -11,18 +11,18 @@
 namespace zbreakout::core::layered_renderer
 {
 
-class LayeredRenderer : public renderer::SceneRenderer
+class LayeredRenderer : public renderer::FrameRenderer
 {
 public:
     LayeredRenderer() = default;
     virtual ~LayeredRenderer() = default;
 
-    void renderScene() override
+    void renderFrame() override
     {
         // Render sorted by layer
         for (const auto& [layer, renderer] : m_renderers)
         {
-            renderer->renderScene();
+            renderer->renderFrame();
         }
     }
 

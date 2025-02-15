@@ -17,19 +17,19 @@ struct Color
     int a {255};
 };
 
-class SceneRenderer
+class FrameRenderer
 {
 public:
-    SceneRenderer() = default;
-    virtual ~SceneRenderer() = default;
+    FrameRenderer() = default;
+    virtual ~FrameRenderer() = default;
 
     /**
-     * Call once per frame to render the scene
+     * Call once per frame to render the frame
      */
-     virtual void renderScene() = 0;
+     virtual void renderFrame() = 0;
 };
 
-class Renderer : public SceneRenderer
+class Renderer : public FrameRenderer
 {
 public:
     Renderer() = default;
