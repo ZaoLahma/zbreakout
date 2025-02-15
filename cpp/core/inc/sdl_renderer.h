@@ -21,7 +21,7 @@ public:
     void renderFrame() override;
 
 private:
-    static void initializeRenderer(zbreakout::core::sdl_window::SDLWindow& window);
+    static void initializeSDLRenderer(zbreakout::core::sdl_window::SDLWindow& window);
 
     static SDL_Renderer* s_sdlRenderer;
 

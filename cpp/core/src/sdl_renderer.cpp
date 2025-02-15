@@ -1,5 +1,4 @@
 #include "sdl_renderer.h"
-
 #include "sdl_window.h"
 
 // SDL2
@@ -15,7 +14,7 @@ SDLRenderer::SDLRenderer(
     zbreakout::core::log::Log& log,
     zbreakout::core::sdl_window::SDLWindow& window) : m_log(log)
 {
-    SDLRenderer::initializeRenderer(window);
+    SDLRenderer::initializeSDLRenderer(window);
 
     m_sdlTexture = 
         SDL_CreateTexture(
@@ -25,12 +24,14 @@ SDLRenderer::SDLRenderer(
 
 SDLRenderer::~SDLRenderer()
 {
+    m_log.info(__func__, "Destroying SDL renderer");
     SDL_DestroyTexture(m_sdlTexture);
     m_log.info(__func__, "SDL texture destroyed");
 
     if (nullptr != s_sdlRenderer)
     {
         SDL_DestroyRenderer(s_sdlRenderer);
+        s_sdlRenderer = nullptr;
         m_log.info(__func__, "SDL renderer destroyed");
     }
 }
@@ -71,15 +72,20 @@ void SDLRenderer::fillRectangle(const core::renderer::ScreenPosition& position, 
 
 void SDLRenderer::renderFrame()
 {
+    // Keep here
     SDL_SetRenderTarget(s_sdlRenderer, nullptr);
-
     SDL_RenderCopy(s_sdlRenderer, m_sdlTexture, nullptr, nullptr);
 
     // Move to layered renderer
     SDL_RenderPresent(s_sdlRenderer);
+
+    // TODO: Check how to properly clear the screen between frames
+    SDL_SetRenderTarget(s_sdlRenderer, m_sdlTexture);
+    SDL_SetRenderDrawColor(s_sdlRenderer, 0, 0, 0, 0);
+    SDL_RenderClear(s_sdlRenderer);
 }
 
-void SDLRenderer::initializeRenderer(zbreakout::core::sdl_window::SDLWindow& window)
+void SDLRenderer::initializeSDLRenderer(zbreakout::core::sdl_window::SDLWindow& window)
 {
     if (nullptr == s_sdlRenderer)
     {

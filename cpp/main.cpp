@@ -14,7 +14,9 @@ int main (int argc, char *argv[])
     log.info(__func__, "zBrekaout starting...");
 
     zbreakout::core::message_broker::MessageBroker messageBroker {log};
-    zbreakout::core::sdl_window::SDLWindow window {log, "zBreakout", zbreakout::core::window::Resolution {800, 600}, messageBroker};
+
+    const zbreakout::core::window::Resolution resolution {800, 600};
+    zbreakout::core::sdl_window::SDLWindow window {log, "zBreakout", resolution, messageBroker};
 
     zbreakout::core::sdl_layered_renderer::SDLLayeredRenderer layeredRenderer
     {
@@ -23,7 +25,7 @@ int main (int argc, char *argv[])
     };
 
 
-    zbkreakout::game::breakout::Breakout breakout {log, messageBroker, layeredRenderer};
+    zbreakout::game::breakout::Breakout breakout {log, messageBroker, layeredRenderer, resolution};
 
     zbreakout::core::engine::Engine engine {log, window, messageBroker, layeredRenderer, breakout};
     engine.start();
