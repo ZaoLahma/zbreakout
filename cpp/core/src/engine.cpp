@@ -30,11 +30,23 @@ void Engine::run()
     m_running = true;
 
     constexpr uint64_t TARGET_FPS {60};
+    constexpr double FIXED_TIMESTEP {1.0 / TARGET_FPS}; // 60 updates per second (in seconds)
+    
     uint64_t frameCounter {0};
+    double accumulator {0.0};
+    
+    auto previousTime = std::chrono::high_resolution_clock::now();
+    
     while (m_running)
     {
-        const auto startTime = std::chrono::high_resolution_clock::now();
-
+        const auto currentTime = std::chrono::high_resolution_clock::now();
+        const std::chrono::duration<double> elapsedTime = currentTime - previousTime;
+        previousTime = currentTime;
+        
+        double deltaTime = elapsedTime.count();
+        
+        accumulator += deltaTime;
+    
         m_window.handleWindowEvents();
         m_messageBroker.processMessages();
 
@@ -43,19 +55,21 @@ void Engine::run()
             break;
         }
 
-        m_engineApp.run();
+        while (accumulator >= FIXED_TIMESTEP)
+        {
+            m_renderer.prepareRenderFrame();
+            m_engineApp.run();
+            accumulator -= FIXED_TIMESTEP;
+        }
+    
         m_renderer.renderFrame();
 
-        const auto endTime = std::chrono::high_resolution_clock::now();
-        const auto timeDiff = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
-        const auto sleepTime = 1000 / TARGET_FPS - timeDiff;
-        std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
-
+        std::this_thread::sleep_for(std::chrono::milliseconds(16));
+    
         frameCounter++;
         if (frameCounter % TARGET_FPS == 0)
         {
-            const auto fps {frameCounter};
-            m_log.info(__func__, "FPS: " + std::to_string(fps));
+            m_log.info(__func__, "FPS: " + std::to_string(frameCounter));
             frameCounter = 0;
         }
     }

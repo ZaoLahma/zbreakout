@@ -20,6 +20,15 @@ public:
     LayeredFrameRenderer() = default;
     virtual ~LayeredFrameRenderer() = default;
 
+    void prepareRenderFrame() override
+    {
+        // Prepare renderers
+        for (const auto& [layer, renderer] : m_layerRenderers)
+        {
+            renderer->prepareRenderFrame();
+        }
+    }
+
     void renderFrame() override
     {
         // Render sorted by layer

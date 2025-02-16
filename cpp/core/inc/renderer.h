@@ -27,6 +27,8 @@ public:
     FrameRenderer() = default;
     virtual ~FrameRenderer() = default;
 
+    virtual void prepareRenderFrame() = 0;
+
     /**
      * Call once per frame to render the frame
      */

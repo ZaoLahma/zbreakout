@@ -530,8 +530,6 @@ SDLRenderer::~SDLRenderer()
 
 void SDLRenderer::fillCircle(const core::renderer::ScreenPosition& position, int radius, const core::renderer::Color& color)
 {
-    SDL_SetRenderTarget(s_sdlRenderer, m_sdlTexture);
-
     SDL_SetRenderDrawColor(s_sdlRenderer, color.r, color.g, color.b, color.a);
 
     const uint32_t fullCirleDegrees {360};
@@ -554,8 +552,6 @@ void SDLRenderer::fillCircle(const core::renderer::ScreenPosition& position, int
 
 void SDLRenderer::fillRectangle(const core::renderer::ScreenPosition& position, int width, int height, const core::renderer::Color& color)
 {
-    SDL_SetRenderTarget(s_sdlRenderer, m_sdlTexture);
-
     SDL_SetRenderDrawColor(s_sdlRenderer, color.r, color.g, color.b, color.a);
     SDL_Rect rect {position.x, position.y, width, height};
     
@@ -567,8 +563,6 @@ void SDLRenderer::fillRectangle(const core::renderer::ScreenPosition& position, 
 
 void SDLRenderer::renderText(const std::string& text, const core::renderer::ScreenPosition& position, const core::renderer::Color& color, uint32_t scale)
 {
-    SDL_SetRenderTarget(s_sdlRenderer, m_sdlTexture);
-
     SDL_SetRenderDrawColor(s_sdlRenderer, color.r, color.g, color.b, color.a);
     SDL_Rect rect {position.x, position.y, 0, 0};
 
@@ -606,21 +600,29 @@ void SDLRenderer::renderText(const std::string& text, const core::renderer::Scre
     }
 }
 
+void SDLRenderer::prepareRenderFrame()
+{
+    SDL_SetRenderTarget(s_sdlRenderer, m_sdlTexture);
+    SDL_SetRenderDrawColor(s_sdlRenderer, 0, 0, 0, 255);
+    SDL_RenderClear(s_sdlRenderer);
+}
+
 void SDLRenderer::renderFrame()
 {
     SDL_SetRenderTarget(s_sdlRenderer, nullptr);
-    SDL_RenderCopy(s_sdlRenderer, m_sdlTexture, nullptr, nullptr);
+    if (SDL_RenderCopy(s_sdlRenderer, m_sdlTexture, nullptr, nullptr) != 0)
+    {
+        m_log.error(__func__, "SDL_RenderCopy failed: " + std::string(SDL_GetError()));
+    }
 
-    SDL_SetRenderTarget(s_sdlRenderer, m_sdlTexture);
-    SDL_SetRenderDrawColor(s_sdlRenderer, 0, 0, 0, 0);
-    SDL_RenderClear(s_sdlRenderer);
+    SDL_RenderPresent(s_sdlRenderer);
 }
 
 void SDLRenderer::initializeSDLRenderer(zbreakout::core::sdl_window::SDLWindow& window)
 {
     if (nullptr == s_sdlRenderer)
     {
-        s_sdlRenderer = SDL_CreateRenderer(window.getSDLWindow(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
+        s_sdlRenderer = SDL_CreateRenderer(window.getSDLWindow(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | SDL_RENDERER_PRESENTVSYNC);
     }
 }
 

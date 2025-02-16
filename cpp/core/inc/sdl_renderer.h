@@ -19,6 +19,7 @@ public:
     void fillRectangle(const core::renderer::ScreenPosition& position, int width, int height, const core::renderer::Color& color) override;
     void renderText(const std::string& text, const core::renderer::ScreenPosition& position, const core::renderer::Color& color, const uint32_t scale) override;
 
+    void prepareRenderFrame() override;
     void renderFrame() override;
 
     SDL_Renderer* getSDLRenderer() { return s_sdlRenderer; }

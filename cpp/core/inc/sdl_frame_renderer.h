@@ -16,13 +16,6 @@ public:
     SDLLayeredFrameRenderer(zbreakout::core::log::Log& log, zbreakout::core::sdl_window::SDLWindow& window) : m_log(log), m_window(window) {}
     virtual ~SDLLayeredFrameRenderer() = default;
 
-    void renderFrame() override
-    {
-        LayeredFrameRenderer::renderFrame();
-
-        SDL_RenderPresent(m_sdlRenderer);
-    }
-
     bool addLayer(uint32_t layer) override
     {
         if (m_layerRenderers.find(layer) == m_layerRenderers.end())
