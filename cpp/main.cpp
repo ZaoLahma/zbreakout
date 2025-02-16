@@ -15,7 +15,7 @@ int main (int argc, char *argv[])
 
     zbreakout::core::message_broker::MessageBroker messageBroker {log};
 
-    const zbreakout::core::window::Resolution resolution {600, 800};
+    const zbreakout::core::window::Resolution resolution {610, 800};
     zbreakout::core::sdl_window::SDLWindow window {log, "zBreakout", resolution, messageBroker};
 
     zbreakout::core::sdl_layered_renderer::SDLLayeredRenderer layeredRenderer

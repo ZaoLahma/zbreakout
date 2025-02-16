@@ -1,5 +1,6 @@
 #pragma once
 
+#include "breakout_block.h"
 #include "log.h"
 #include "renderer.h"
 #include "window.h"
@@ -22,6 +23,8 @@ public:
     void render();
 
     void handlePaddleCollision();
+
+    void resolveBlockCollision(core::renderer::ScreenPosition blockPosition, core::renderer::ScreenPosition blockSize);
 
     zbreakout::core::renderer::ScreenPosition getPosition() const { return m_position; }
     zbreakout::core::renderer::ScreenPosition getAcceleration() const { return m_acceleration; }

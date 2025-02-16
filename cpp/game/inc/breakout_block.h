@@ -22,8 +22,12 @@ public:
 
     void render();
 
+    void handleBallCollision();
+
     zbreakout::core::renderer::ScreenPosition getPosition() const { return m_position; }
     zbreakout::core::renderer::ScreenPosition getBlockSize() const { return m_blockSize; }
+    uint8_t getBlockHealth() const { return m_blockHealth; }
+    void setBlockHealth(uint8_t health) { m_blockHealth = health; }
 
 private:
     zbreakout::core::log::Log& m_log;
@@ -31,6 +35,8 @@ private:
     zbreakout::core::renderer::ScreenPosition m_position;
 
     const zbreakout::core::renderer::ScreenPosition m_blockSize;
+
+    uint8_t m_blockHealth {1};
 };
 
 }

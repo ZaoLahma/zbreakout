@@ -33,6 +33,42 @@ Breakout::Breakout(
     const zbreakout::core::renderer::ScreenPosition position {m_resolution.width / 2, m_resolution.height};
     m_breakoutPaddle = std::make_unique<zbreakout::game::breakout_paddle::BreakoutPaddle>(m_log, m_renderer, resolution);
 
+    const int numBlockColumns {7};
+    const int blockSpacing {3};
+
+    const int totalSpacing = (numBlockColumns - 1) * blockSpacing;
+    const int blockWidth = (m_resolution.width - totalSpacing) / numBlockColumns;
+    const uint32_t numBlockRows {5};
+    const int blockHeight {blockWidth / 2};
+
+    const int totalBlockWidth = numBlockColumns * blockWidth + totalSpacing;
+    const int startX = (m_resolution.width - totalBlockWidth) / 2;  // Centering the blocks
+
+    for (int column {0}; column < numBlockColumns; ++column)
+    {
+        for (int row {0}; row < numBlockRows; ++row)
+        {
+            const int x {startX + column * (blockWidth + blockSpacing)};  // Centered positioning
+            const int y {blockSpacing + row * (blockHeight + blockSpacing)};
+            const zbreakout::core::renderer::ScreenPosition position {x, y};
+            const zbreakout::core::renderer::ScreenPosition size {blockWidth, blockHeight};
+            m_breakoutBlocks.push_back(std::make_shared<zbreakout::game::breakout_block::BreakoutBlock>(m_log, m_renderer, position, size));
+
+            // Set initial block health
+            if (row < 2)
+            {
+                m_breakoutBlocks.back()->setBlockHealth(1);
+            }
+            else if (row < 4)
+            {
+                m_breakoutBlocks.back()->setBlockHealth(2);
+            }
+            else
+            {
+                m_breakoutBlocks.back()->setBlockHealth(3);
+            }
+        }
+    }
 
     messageBroker.subscribeToMessageType(
         std::type_index(
@@ -73,22 +109,18 @@ bool Breakout::checkBallCollision(
     const zbreakout::core::renderer::ScreenPosition &ballAcceleration,
     uint32_t ballRadius)
 {
-        // Step 1: Get block bounds
         float blockLeft = objectPosition.x;
         float blockRight = objectPosition.x + objectSize.x;
         float blockTop = objectPosition.y;
         float blockBottom = objectPosition.y + objectSize.y;
     
-        // Step 2: Find the closest point on the block to the ball
         float closestX = std::max(blockLeft, std::min((float) ballPosition.x, blockRight));
         float closestY = std::max(blockTop, std::min((float) ballPosition.y, blockBottom));
     
-        // Step 3: Compute the distance between ball center and closest point
         float dx = ballPosition.x - closestX;
         float dy = ballPosition.y - closestY;
         float distanceSquared = (dx * dx) + (dy * dy);
     
-        // Step 4: Check if the distance is within the ball's radius
         return distanceSquared <= (ballRadius * ballRadius);
 }
 
@@ -110,6 +142,31 @@ void Breakout::run()
         m_breakoutBall->getBallRadius()))
     {
         m_breakoutBall->handlePaddleCollision();
+    }
+
+    std::vector<std::shared_ptr<zbreakout::game::breakout_block::BreakoutBlock>> blocksToRemove;
+    for (const auto& block : m_breakoutBlocks)
+    {
+        if (checkBallCollision(
+            block->getPosition(),
+            block->getBlockSize(),
+            m_breakoutBall->getPosition(),
+            m_breakoutBall->getAcceleration(),
+            m_breakoutBall->getBallRadius()))
+        {
+            block->handleBallCollision();
+            m_breakoutBall->resolveBlockCollision(block->getPosition(), block->getBlockSize());
+
+            if (block->getBlockHealth() == 0)
+            {
+                blocksToRemove.push_back(block);
+            }
+        }
+    }
+
+    for (const auto& block : blocksToRemove)
+    {
+        m_breakoutBlocks.erase(std::remove(m_breakoutBlocks.begin(), m_breakoutBlocks.end(), block), m_breakoutBlocks.end());
     }
 }
 

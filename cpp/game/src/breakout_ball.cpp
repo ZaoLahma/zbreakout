@@ -24,6 +24,28 @@ void BreakoutBall::handlePaddleCollision()
     }
 }
 
+void BreakoutBall::resolveBlockCollision(core::renderer::ScreenPosition blockPosition, core::renderer::ScreenPosition blockSize)
+{
+    float overlapLeft   = (m_position.x + m_ballRadius) - blockPosition.x;
+    float overlapRight  = (blockPosition.x + blockSize.x) - (m_position.x - m_ballRadius);
+    float overlapTop    = (m_position.y + m_ballRadius) - blockPosition.y;
+    float overlapBottom = (blockPosition.y + blockSize.y) - (m_position.y - m_ballRadius);
+
+    float minOverlapX = std::min(overlapLeft, overlapRight);
+    float minOverlapY = std::min(overlapTop, overlapBottom);
+
+    if (minOverlapX < minOverlapY)
+    {
+        // Ball hit left or right
+        m_acceleration.x = -m_acceleration.x;
+    }
+    else
+    {
+        // Ball hit top or bottom
+        m_acceleration.y = -m_acceleration.y;
+    }
+}
+
 void BreakoutBall::updatePosition()
 {
     if (m_position.x + m_acceleration.x < 0)
