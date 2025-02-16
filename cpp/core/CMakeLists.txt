@@ -20,6 +20,7 @@ target_include_directories(zbreakout_core PUBLIC
 
 # SDL2 stuff
 find_package(SDL2 REQUIRED)
+find_package(SDL2_ttf REQUIRED)
 
 add_library               (external.sdl2 INTERFACE)
 target_include_directories(external.sdl2 INTERFACE ${SDL2_INCLUDE_DIRS})

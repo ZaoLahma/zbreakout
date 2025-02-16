@@ -1,5 +1,8 @@
 #pragma once
 
+// Standard library
+#include <string>
+
 namespace zbreakout::core::renderer
 {
 
@@ -53,6 +56,15 @@ public:
      * @param color The color of the rectangle
      */
     virtual void fillRectangle(const ScreenPosition& position, int width, int height, const Color& color) = 0;
+
+    /**
+     * Draw text
+     *
+     * @param text The text to draw
+     * @param position The top left corner of the text
+     * @param color The color of the text
+     */
+    virtual void renderText(const std::string& text, const ScreenPosition& position, const Color& color) = 0;
 };
 
 }

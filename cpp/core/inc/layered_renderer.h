@@ -11,6 +11,9 @@
 namespace zbreakout::core::layered_renderer
 {
 
+/**
+ * Layered renderer
+ */
 class LayeredRenderer : public renderer::FrameRenderer
 {
 public:
@@ -33,12 +36,19 @@ public:
      */
     virtual bool addLayer(uint32_t layer) = 0;
 
+    /**
+     * Get the renderer for the given layer, if it has been added with addLayer
+     *
+     * @param layer The layer to get the renderer for
+     * @return A shared pointer to the renderer for the given layer, or an empty optional
+     */
     std::optional<std::shared_ptr<renderer::Renderer>> getRendererForLayer(uint32_t layer)
     {
         if (m_layerRenderers.find(layer) != m_layerRenderers.end())
         {
             return m_layerRenderers[layer];
         }
+
         return {};
     }
 

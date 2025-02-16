@@ -27,6 +27,8 @@ Breakout::Breakout(
     else
     {
         m_log.error(__func__, "Failed to get renderer for layer 0");
+
+        return;
     }
 
     m_breakoutBall = std::make_unique<zbreakout::game::breakout_ball::BreakoutBall>(m_log, m_renderer, resolution);

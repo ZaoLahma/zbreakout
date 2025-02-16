@@ -1,4 +1,5 @@
 #include "breakout_ball.h"
+#include <random>
 
 namespace zbreakout::game::breakout_ball
 {
@@ -8,7 +9,19 @@ BreakoutBall::BreakoutBall(
     std::shared_ptr<zbreakout::core::renderer::Renderer> renderer,
     const zbreakout::core::window::Resolution& resolution) :
         m_log(log), m_renderer(renderer), m_resolution(resolution),
-        m_position({resolution.width / 2, resolution.height / 2}), m_acceleration({5, 5}) {}
+        m_position({resolution.width / 2, resolution.height / 2}) 
+{
+    // Randomize start position within the lower third of the screen
+    m_position.x = rand() % (resolution.width / 3) + resolution.width / 3;
+    m_position.y = rand() % (resolution.height / 3) + resolution.height / 3;
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> distrib(0, 1);
+
+    m_acceleration.x = (distrib(gen) == 0) ? -5 : 5;
+    m_acceleration.y = 5;
+}
 
 void BreakoutBall::render() 
 {
