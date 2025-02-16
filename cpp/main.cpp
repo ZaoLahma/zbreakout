@@ -2,7 +2,7 @@
 #include "engine.h"
 #include "log.h"
 #include "message_broker.h"
-#include "sdl_layered_renderer.h"
+#include "sdl_frame_renderer.h"
 #include "sdl_window.h"
 
 // Standard library
@@ -18,7 +18,7 @@ int main (int argc, char *argv[])
     const zbreakout::core::window::Resolution resolution {610, 800};
     zbreakout::core::sdl_window::SDLWindow window {log, "zBreakout", resolution, messageBroker};
 
-    zbreakout::core::sdl_layered_renderer::SDLLayeredRenderer layeredRenderer
+    zbreakout::core::sdl_layered_renderer::SDLLayeredFrameRenderer layeredRenderer
     {
         log,
         window

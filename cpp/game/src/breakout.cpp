@@ -1,5 +1,6 @@
 #include "breakout.h"
 #include "breakout_paddle.h"
+#include "breakout_ui.h"
 #include "engine.h"
 #include "user_input.h"
 #include "window.h"
@@ -10,19 +11,25 @@
 namespace zbreakout::game::breakout
 {
 
+enum class BreakoutRenderLayers : uint32_t
+{
+    Field = 0,
+    UI = 1
+};
+
 Breakout::Breakout(
     zbreakout::core::log::Log& log,
     zbreakout::core::message_broker::MessageBroker& messageBroker,
-    zbreakout::core::layered_renderer::LayeredRenderer& renderer,
+    zbreakout::core::layered_renderer::LayeredFrameRenderer& renderer,
     const zbreakout::core::window::Resolution& resolution) :
         zbreakout::core::engine::EngineApp(log, messageBroker),
         m_layeredRenderer(renderer), m_resolution(resolution)
 {
-    m_layeredRenderer.addLayer(0);
+    m_layeredRenderer.addLayer(static_cast<std::underlying_type_t<BreakoutRenderLayers>>(BreakoutRenderLayers::Field));
 
     if (auto renderer = m_layeredRenderer.getRendererForLayer(0); renderer.has_value())
     {
-        m_renderer = renderer.value();
+        m_fieldRenderer = renderer.value();
     }
     else
     {
@@ -31,9 +38,11 @@ Breakout::Breakout(
         return;
     }
 
-    m_breakoutBall = std::make_unique<zbreakout::game::breakout_ball::BreakoutBall>(m_log, m_renderer, resolution);
+    m_breakoutBall = std::make_unique<zbreakout::game::breakout_ball::BreakoutBall>(m_log, m_fieldRenderer, resolution);
     const zbreakout::core::renderer::ScreenPosition position {m_resolution.width / 2, m_resolution.height};
-    m_breakoutPaddle = std::make_unique<zbreakout::game::breakout_paddle::BreakoutPaddle>(m_log, m_renderer, resolution);
+    m_breakoutPaddle = std::make_unique<zbreakout::game::breakout_paddle::BreakoutPaddle>(m_log, m_fieldRenderer, resolution);
+
+    const int uiHeight {25};
 
     const int numBlockColumns {7};
     const int blockSpacing {3};
@@ -51,10 +60,10 @@ Breakout::Breakout(
         for (int row {0}; row < numBlockRows; ++row)
         {
             const int x {startX + column * (blockWidth + blockSpacing)};  // Centered positioning
-            const int y {blockSpacing + row * (blockHeight + blockSpacing)};
+            const int y {uiHeight + blockSpacing + row * (blockHeight + blockSpacing)};
             const zbreakout::core::renderer::ScreenPosition position {x, y};
             const zbreakout::core::renderer::ScreenPosition size {blockWidth, blockHeight};
-            m_breakoutBlocks.push_back(std::make_shared<zbreakout::game::breakout_block::BreakoutBlock>(m_log, m_renderer, position, size));
+            m_breakoutBlocks.push_back(std::make_shared<zbreakout::game::breakout_block::BreakoutBlock>(m_log, m_fieldRenderer, position, size));
 
             // Set initial block health
             if (row < 2)
@@ -71,6 +80,8 @@ Breakout::Breakout(
             }
         }
     }
+
+    m_breakoutUI = std::make_unique<zbreakout::game::breakout_ui::BreakoutUI>(m_log, m_fieldRenderer, m_resolution);
 
     messageBroker.subscribeToMessageType(
         std::type_index(
@@ -136,6 +147,8 @@ void Breakout::run()
         block->render();
     }
 
+    m_breakoutUI->render();
+
     if (checkBallCollision(
         m_breakoutPaddle->getPosition(),
         m_breakoutPaddle->getPaddleSize(),
@@ -163,6 +176,8 @@ void Breakout::run()
             {
                 blocksToRemove.push_back(block);
             }
+
+            m_breakoutUI->addToScore(250);
         }
     }
 

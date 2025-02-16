@@ -14,11 +14,11 @@ namespace zbreakout::core::layered_renderer
 /**
  * Layered renderer
  */
-class LayeredRenderer : public renderer::FrameRenderer
+class LayeredFrameRenderer : public renderer::FrameRenderer
 {
 public:
-    LayeredRenderer() = default;
-    virtual ~LayeredRenderer() = default;
+    LayeredFrameRenderer() = default;
+    virtual ~LayeredFrameRenderer() = default;
 
     void renderFrame() override
     {

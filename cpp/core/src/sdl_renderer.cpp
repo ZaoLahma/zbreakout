@@ -15,292 +15,449 @@ SDL_Renderer* SDLRenderer::s_sdlRenderer {nullptr};
 // Craziness : Define a font using bitmaps instead of TTF
 std::array<std::bitset<8>, 8> letterA =
 {
-    std::bitset<8>("00111100"), // Row 1
-    std::bitset<8>("01100110"), // Row 2
-    std::bitset<8>("01000010"), // Row 3
-    std::bitset<8>("01111110"), // Row 4
-    std::bitset<8>("01000010"), // Row 5
-    std::bitset<8>("01000010"), // Row 6
-    std::bitset<8>("01000010"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+    std::bitset<8>("00111100"), 
+    std::bitset<8>("01100110"), 
+    std::bitset<8>("01000010"), 
+    std::bitset<8>("01111110"), 
+    std::bitset<8>("01000010"), 
+    std::bitset<8>("01000010"), 
+    std::bitset<8>("01000010"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterB = {
-    std::bitset<8>("11111000"), // Row 1
-    std::bitset<8>("10000100"), // Row 2
-    std::bitset<8>("10000100"), // Row 3
-    std::bitset<8>("11111000"), // Row 4
-    std::bitset<8>("10000100"), // Row 5
-    std::bitset<8>("10000100"), // Row 6
-    std::bitset<8>("11111000"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterB =
+{
+    std::bitset<8>("11111000"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("11111000"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("11111000"), 
+    std::bitset<8>("00000000")   
 };
 
 std::array<std::bitset<8>, 8> letterC =
 {
-    std::bitset<8>("00111100"), // Row 1
-    std::bitset<8>("01000010"), // Row 2
-    std::bitset<8>("01000010"), // Row 3
-    std::bitset<8>("01000010"), // Row 4
-    std::bitset<8>("01000010"), // Row 5
-    std::bitset<8>("01000010"), // Row 6
-    std::bitset<8>("00111100"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+    std::bitset<8>("00111100"), 
+    std::bitset<8>("01000010"), 
+    std::bitset<8>("01000000"), 
+    std::bitset<8>("01000000"), 
+    std::bitset<8>("01000000"), 
+    std::bitset<8>("01000010"), 
+    std::bitset<8>("00111100"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterD = {
-    std::bitset<8>("11111000"), // Row 1
-    std::bitset<8>("10000100"), // Row 2
-    std::bitset<8>("10000100"), // Row 3
-    std::bitset<8>("10000100"), // Row 4
-    std::bitset<8>("10000100"), // Row 5
-    std::bitset<8>("10000100"), // Row 6
-    std::bitset<8>("11111000"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterD =
+{
+    std::bitset<8>("11111000"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("11111000"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterE = {
-    std::bitset<8>("11111000"), // Row 1
-    std::bitset<8>("10000000"), // Row 2
-    std::bitset<8>("10000000"), // Row 3
-    std::bitset<8>("11110000"), // Row 4
-    std::bitset<8>("10000000"), // Row 5
-    std::bitset<8>("10000000"), // Row 6
-    std::bitset<8>("11111000"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterE =
+{
+    std::bitset<8>("11111000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("11110000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("11111000"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterF = {
-    std::bitset<8>("11111000"), // Row 1
-    std::bitset<8>("10000000"), // Row 2
-    std::bitset<8>("10000000"), // Row 3
-    std::bitset<8>("11110000"), // Row 4
-    std::bitset<8>("10000000"), // Row 5
-    std::bitset<8>("10000000"), // Row 6
-    std::bitset<8>("10000000"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterF =
+{
+    std::bitset<8>("11111000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("11110000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterG = {
-    std::bitset<8>("01111100"), // Row 1
-    std::bitset<8>("10000000"), // Row 2
-    std::bitset<8>("10000000"), // Row 3
-    std::bitset<8>("10111110"), // Row 4
-    std::bitset<8>("10000010"), // Row 5
-    std::bitset<8>("10000010"), // Row 6
-    std::bitset<8>("01111100"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterG =
+{
+    std::bitset<8>("01111100"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("10111110"), 
+    std::bitset<8>("10000010"), 
+    std::bitset<8>("10000010"), 
+    std::bitset<8>("01111100"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterH = {
-    std::bitset<8>("10000100"), // Row 1
-    std::bitset<8>("10000100"), // Row 2
-    std::bitset<8>("10000100"), // Row 3
-    std::bitset<8>("11111110"), // Row 4
-    std::bitset<8>("10000100"), // Row 5
-    std::bitset<8>("10000100"), // Row 6
-    std::bitset<8>("10000100"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterH =
+{
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("11111110"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterI = {
-    std::bitset<8>("00111100"), // Row 1
-    std::bitset<8>("00010000"), // Row 2
-    std::bitset<8>("00010000"), // Row 3
-    std::bitset<8>("00010000"), // Row 4
-    std::bitset<8>("00010000"), // Row 5
-    std::bitset<8>("00010000"), // Row 6
-    std::bitset<8>("00111100"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterI =
+{
+    std::bitset<8>("00111100"), 
+    std::bitset<8>("00010000"), 
+    std::bitset<8>("00010000"), 
+    std::bitset<8>("00010000"), 
+    std::bitset<8>("00010000"), 
+    std::bitset<8>("00010000"), 
+    std::bitset<8>("00111100"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterJ = {
-    std::bitset<8>("00111100"), // Row 1
-    std::bitset<8>("00001000"), // Row 2
-    std::bitset<8>("00001000"), // Row 3
-    std::bitset<8>("00001000"), // Row 4
-    std::bitset<8>("00001000"), // Row 5
-    std::bitset<8>("10001000"), // Row 6
-    std::bitset<8>("01111100"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterJ =
+{
+    std::bitset<8>("00111100"), 
+    std::bitset<8>("00001000"), 
+    std::bitset<8>("00001000"), 
+    std::bitset<8>("00001000"), 
+    std::bitset<8>("00001000"), 
+    std::bitset<8>("10001000"), 
+    std::bitset<8>("01111100"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterK = {
-    std::bitset<8>("10000100"), // Row 1
-    std::bitset<8>("10001000"), // Row 2
-    std::bitset<8>("10110000"), // Row 3
-    std::bitset<8>("11000000"), // Row 4
-    std::bitset<8>("10110000"), // Row 5
-    std::bitset<8>("10001000"), // Row 6
-    std::bitset<8>("10000100"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterK =
+{
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10001000"), 
+    std::bitset<8>("10110000"), 
+    std::bitset<8>("11000000"), 
+    std::bitset<8>("10110000"), 
+    std::bitset<8>("10001000"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterL = {
-    std::bitset<8>("10000000"), // Row 1
-    std::bitset<8>("10000000"), // Row 2
-    std::bitset<8>("10000000"), // Row 3
-    std::bitset<8>("10000000"), // Row 4
-    std::bitset<8>("10000000"), // Row 5
-    std::bitset<8>("10000000"), // Row 6
-    std::bitset<8>("11111000"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterL =
+{
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("11111000"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterM = {
-    std::bitset<8>("10000100"), // Row 1
-    std::bitset<8>("11000110"), // Row 2
-    std::bitset<8>("10100110"), // Row 3
-    std::bitset<8>("10100110"), // Row 4
-    std::bitset<8>("10100110"), // Row 5
-    std::bitset<8>("10000100"), // Row 6
-    std::bitset<8>("10000100"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterM =
+{
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("11000110"), 
+    std::bitset<8>("10100110"), 
+    std::bitset<8>("10100110"), 
+    std::bitset<8>("10100110"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterN = {
-    std::bitset<8>("10000100"), // Row 1
-    std::bitset<8>("11000100"), // Row 2
-    std::bitset<8>("10100100"), // Row 3
-    std::bitset<8>("10010100"), // Row 4
-    std::bitset<8>("10001100"), // Row 5
-    std::bitset<8>("10000110"), // Row 6
-    std::bitset<8>("10000100"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterN =
+{
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("11000100"), 
+    std::bitset<8>("10100100"), 
+    std::bitset<8>("10010100"), 
+    std::bitset<8>("10001100"), 
+    std::bitset<8>("10000110"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterO = {
-    std::bitset<8>("01111100"), // Row 1
-    std::bitset<8>("10000010"), // Row 2
-    std::bitset<8>("10000010"), // Row 3
-    std::bitset<8>("10000010"), // Row 4
-    std::bitset<8>("10000010"), // Row 5
-    std::bitset<8>("10000010"), // Row 6
-    std::bitset<8>("01111100"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterO =
+{
+    std::bitset<8>("01111100"), 
+    std::bitset<8>("10000010"), 
+    std::bitset<8>("10000010"), 
+    std::bitset<8>("10000010"), 
+    std::bitset<8>("10000010"), 
+    std::bitset<8>("10000010"), 
+    std::bitset<8>("01111100"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterP = {
-    std::bitset<8>("11111000"), // Row 1
-    std::bitset<8>("10000100"), // Row 2
-    std::bitset<8>("10000100"), // Row 3
-    std::bitset<8>("11111000"), // Row 4
-    std::bitset<8>("10000000"), // Row 5
-    std::bitset<8>("10000000"), // Row 6
-    std::bitset<8>("10000000"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterP =
+{
+    std::bitset<8>("11111000"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("11111000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterQ = {
-    std::bitset<8>("01111100"), // Row 1
-    std::bitset<8>("10000010"), // Row 2
-    std::bitset<8>("10000010"), // Row 3
-    std::bitset<8>("10111110"), // Row 4
-    std::bitset<8>("10000010"), // Row 5
-    std::bitset<8>("10000010"), // Row 6
-    std::bitset<8>("01111110"), // Row 7
-    std::bitset<8>("00000001")  // Row 8 (optional blank space at the bottom for tail)
+std::array<std::bitset<8>, 8> letterQ =
+{
+    std::bitset<8>("01111100"), 
+    std::bitset<8>("10000010"), 
+    std::bitset<8>("10000010"), 
+    std::bitset<8>("10111110"), 
+    std::bitset<8>("10000010"), 
+    std::bitset<8>("10000010"), 
+    std::bitset<8>("01111110"), 
+    std::bitset<8>("00000001")
 };
 
-std::array<std::bitset<8>, 8> letterR = {
-    std::bitset<8>("11111000"), // Row 1
-    std::bitset<8>("10000100"), // Row 2
-    std::bitset<8>("10000100"), // Row 3
-    std::bitset<8>("11111000"), // Row 4
-    std::bitset<8>("10001000"), // Row 5
-    std::bitset<8>("10000100"), // Row 6
-    std::bitset<8>("10000100"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterR =
+{
+    std::bitset<8>("11111000"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("11111000"), 
+    std::bitset<8>("10001000"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterS = {
-    std::bitset<8>("01111100"), // Row 1
-    std::bitset<8>("10000010"), // Row 2
-    std::bitset<8>("10000010"), // Row 3
-    std::bitset<8>("01111100"), // Row 4
-    std::bitset<8>("00001000"), // Row 5
-    std::bitset<8>("00001000"), // Row 6
-    std::bitset<8>("01111100"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterS =
+{
+    std::bitset<8>("01111100"), 
+    std::bitset<8>("10000010"), 
+    std::bitset<8>("10000000"), 
+    std::bitset<8>("01111100"), 
+    std::bitset<8>("00000010"), 
+    std::bitset<8>("00000001"), 
+    std::bitset<8>("01111100"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterT = {
-    std::bitset<8>("11111100"), // Row 1
-    std::bitset<8>("00001000"), // Row 2
-    std::bitset<8>("00001000"), // Row 3
-    std::bitset<8>("00001000"), // Row 4
-    std::bitset<8>("00001000"), // Row 5
-    std::bitset<8>("00001000"), // Row 6
-    std::bitset<8>("00001000"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterT =
+{
+    std::bitset<8>("11111100"), 
+    std::bitset<8>("00001000"), 
+    std::bitset<8>("00001000"), 
+    std::bitset<8>("00001000"), 
+    std::bitset<8>("00001000"), 
+    std::bitset<8>("00001000"), 
+    std::bitset<8>("00001000"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterU = {
-    std::bitset<8>("10000100"), // Row 1
-    std::bitset<8>("10000100"), // Row 2
-    std::bitset<8>("10000100"), // Row 3
-    std::bitset<8>("10000100"), // Row 4
-    std::bitset<8>("10000100"), // Row 5
-    std::bitset<8>("10000100"), // Row 6
-    std::bitset<8>("01111100"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterU =
+{
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("01111100"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterV = {
-    std::bitset<8>("10000100"), // Row 1
-    std::bitset<8>("10000100"), // Row 2
-    std::bitset<8>("10000100"), // Row 3
-    std::bitset<8>("10000100"), // Row 4
-    std::bitset<8>("10000100"), // Row 5
-    std::bitset<8>("10000100"), // Row 6
-    std::bitset<8>("01111100"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterV =
+{
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("01111100"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterW = {
-    std::bitset<8>("10000100"), // Row 1
-    std::bitset<8>("10000100"), // Row 2
-    std::bitset<8>("10100100"), // Row 3
-    std::bitset<8>("10100100"), // Row 4
-    std::bitset<8>("10100100"), // Row 5
-    std::bitset<8>("10000100"), // Row 6
-    std::bitset<8>("10000100"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterW =
+{
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10100100"), 
+    std::bitset<8>("10100100"), 
+    std::bitset<8>("10100100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("00000000")   
 };
 
 
-std::array<std::bitset<8>, 8> letterX = {
-    std::bitset<8>("10000001"), // Row 1
-    std::bitset<8>("01000010"), // Row 2
-    std::bitset<8>("00100100"), // Row 3
-    std::bitset<8>("00011000"), // Row 4
-    std::bitset<8>("00100100"), // Row 5
-    std::bitset<8>("01000010"), // Row 6
-    std::bitset<8>("10000001"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterX =
+{
+    std::bitset<8>("10000001"), 
+    std::bitset<8>("01000010"), 
+    std::bitset<8>("00100100"), 
+    std::bitset<8>("00011000"), 
+    std::bitset<8>("00100100"), 
+    std::bitset<8>("01000010"), 
+    std::bitset<8>("10000001"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterY = {
-    std::bitset<8>("10000100"), // Row 1
-    std::bitset<8>("10000100"), // Row 2
-    std::bitset<8>("10000100"), // Row 3
-    std::bitset<8>("01111100"), // Row 4
-    std::bitset<8>("00001000"), // Row 5
-    std::bitset<8>("00001000"), // Row 6
-    std::bitset<8>("00001000"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterY =
+{
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("10000100"), 
+    std::bitset<8>("01111100"), 
+    std::bitset<8>("00001000"), 
+    std::bitset<8>("00001000"), 
+    std::bitset<8>("00001000"), 
+    std::bitset<8>("00000000")   
 };
 
-std::array<std::bitset<8>, 8> letterZ = {
-    std::bitset<8>("11111110"), // Row 1
-    std::bitset<8>("00000100"), // Row 2
-    std::bitset<8>("00001000"), // Row 3
-    std::bitset<8>("00010000"), // Row 4
-    std::bitset<8>("00100000"), // Row 5
-    std::bitset<8>("01000000"), // Row 6
-    std::bitset<8>("11111110"), // Row 7
-    std::bitset<8>("00000000")  // Row 8 (optional blank space at the bottom)
+std::array<std::bitset<8>, 8> letterZ =
+{
+    std::bitset<8>("11111110"), 
+    std::bitset<8>("00000100"), 
+    std::bitset<8>("00001000"), 
+    std::bitset<8>("00010000"), 
+    std::bitset<8>("00100000"), 
+    std::bitset<8>("01000000"), 
+    std::bitset<8>("11111110"), 
+    std::bitset<8>("00000000")   
 };
+
+std::array<std::bitset<8>, 8> letter0 =
+{
+    std::bitset<8>("01111100"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("10010010"),
+    std::bitset<8>("10010010"),
+    std::bitset<8>("10010010"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("01111100"),
+    std::bitset<8>("00000000")
+};
+
+std::array<std::bitset<8>, 8> letter1 =
+{
+    std::bitset<8>("00001000"),
+    std::bitset<8>("00011000"),
+    std::bitset<8>("00101000"),
+    std::bitset<8>("00001000"),
+    std::bitset<8>("00001000"),
+    std::bitset<8>("00001000"),
+    std::bitset<8>("00111110"),
+    std::bitset<8>("00000000")
+};
+
+std::array<std::bitset<8>, 8> letter2 =
+{
+    std::bitset<8>("01111100"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("00000010"),
+    std::bitset<8>("00011100"),
+    std::bitset<8>("00100000"),
+    std::bitset<8>("01000000"),
+    std::bitset<8>("11111110"),
+    std::bitset<8>("00000000")
+};
+
+std::array<std::bitset<8>, 8> letter3 =
+{
+    std::bitset<8>("01111100"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("00000010"),
+    std::bitset<8>("00111100"),
+    std::bitset<8>("00000010"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("01111100"),
+    std::bitset<8>("00000000")
+};
+
+std::array<std::bitset<8>, 8> letter4 =
+{
+    std::bitset<8>("00001100"),
+    std::bitset<8>("00010100"),
+    std::bitset<8>("00100100"),
+    std::bitset<8>("01000100"),
+    std::bitset<8>("11111110"),
+    std::bitset<8>("00000100"),
+    std::bitset<8>("00000100"),
+    std::bitset<8>("00000000")
+};
+
+std::array<std::bitset<8>, 8> letter5 =
+{
+    std::bitset<8>("11111110"),
+    std::bitset<8>("10000000"),
+    std::bitset<8>("10000000"),
+    std::bitset<8>("11111100"),
+    std::bitset<8>("00000010"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("01111100"),
+    std::bitset<8>("00000000")
+};
+
+std::array<std::bitset<8>, 8> letter6 =
+{
+    std::bitset<8>("01111100"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("10000000"),
+    std::bitset<8>("11111100"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("01111100"),
+    std::bitset<8>("00000000")
+};
+
+std::array<std::bitset<8>, 8> letter7 =
+{
+    std::bitset<8>("11111110"),
+    std::bitset<8>("00000010"),
+    std::bitset<8>("00000100"),
+    std::bitset<8>("00001000"),
+    std::bitset<8>("00010000"),
+    std::bitset<8>("00100000"),
+    std::bitset<8>("01000000"),
+    std::bitset<8>("00000000")
+};
+
+std::array<std::bitset<8>, 8> letter8 =
+{
+    std::bitset<8>("01111100"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("01111100"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("01111100"),
+    std::bitset<8>("00000000")
+};
+
+std::array<std::bitset<8>, 8> letter9 =
+{
+    std::bitset<8>("01111100"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("01111110"),
+    std::bitset<8>("00000010"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("01111100"),
+    std::bitset<8>("00000000")
+};
+
+std::array<std::bitset<8>, 8> blank =
+{
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000")
+};
+
 
 std::map<char, std::array<std::bitset<8>, 8>> characterToLetter {
     {'A', letterA},
@@ -328,7 +485,20 @@ std::map<char, std::array<std::bitset<8>, 8>> characterToLetter {
     {'W', letterW},
     {'X', letterX},
     {'Y', letterY},
-    {'Z', letterZ}
+    {'Z', letterZ},
+    {'0', letter0},
+    {'1', letter1},
+    {'2', letter2},
+    {'3', letter3},
+    {'4', letter4},
+    {'5', letter5},
+    {'6', letter6},
+    {'7', letter7},
+    {'8', letter8},
+    {'9', letter9},
+    {' ', blank},
+    {'\n', blank},
+    {'\t', blank}
 };
 
 
@@ -395,7 +565,7 @@ void SDLRenderer::fillRectangle(const core::renderer::ScreenPosition& position, 
     }
 }
 
-void SDLRenderer::renderText(const std::string& text, const core::renderer::ScreenPosition& position, const core::renderer::Color& color)
+void SDLRenderer::renderText(const std::string& text, const core::renderer::ScreenPosition& position, const core::renderer::Color& color, uint32_t scale)
 {
     SDL_SetRenderTarget(s_sdlRenderer, m_sdlTexture);
 
@@ -403,7 +573,10 @@ void SDLRenderer::renderText(const std::string& text, const core::renderer::Scre
     SDL_Rect rect {position.x, position.y, 0, 0};
 
     uint32_t charCounter {0};
-    for (char c : text)
+    // Iterate over the text to upper case
+    std::string upperCaseText = text;
+    std::transform(upperCaseText.begin(), upperCaseText.end(), upperCaseText.begin(), ::toupper);
+    for (char c : upperCaseText)
     {
         auto letter = characterToLetter.find(c);
         if (letter != characterToLetter.end())
@@ -414,10 +587,11 @@ void SDLRenderer::renderText(const std::string& text, const core::renderer::Scre
                 {
                     if (letter->second[y][x])
                     {
-                        rect.w = 1;
-                        rect.h = 1;
-                        rect.x = position.x + (7 - x) + charCounter * 8;  // Adjust x to account for reversed rendering
-                        rect.y = position.y + y;
+                        // Handle scale
+                        rect.w = scale;
+                        rect.h = scale;
+                        rect.x = position.x + (7 - x) + charCounter * 8 * scale;  // Adjust x to account for reversed rendering
+                        rect.y = position.y + y * scale;
                         SDL_RenderFillRect(s_sdlRenderer, &rect);
                     }
                 }
@@ -437,7 +611,6 @@ void SDLRenderer::renderFrame()
     SDL_SetRenderTarget(s_sdlRenderer, nullptr);
     SDL_RenderCopy(s_sdlRenderer, m_sdlTexture, nullptr, nullptr);
 
-    // TODO: Check how to properly clear the screen between frames
     SDL_SetRenderTarget(s_sdlRenderer, m_sdlTexture);
     SDL_SetRenderDrawColor(s_sdlRenderer, 0, 0, 0, 0);
     SDL_RenderClear(s_sdlRenderer);

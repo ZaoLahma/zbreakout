@@ -5,6 +5,7 @@ add_library(zbreakout_game STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src/breakout_paddle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/breakout_ball.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/breakout_block.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/breakout_ui.cpp
     # Add other game source files here
 )
 

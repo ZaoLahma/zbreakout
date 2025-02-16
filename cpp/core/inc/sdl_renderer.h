@@ -17,7 +17,7 @@ public:
     ~SDLRenderer();
     void fillCircle(const core::renderer::ScreenPosition& position, int radius, const core::renderer::Color& color) override;
     void fillRectangle(const core::renderer::ScreenPosition& position, int width, int height, const core::renderer::Color& color) override;
-    void renderText(const std::string& text, const core::renderer::ScreenPosition& position, const core::renderer::Color& color) override;
+    void renderText(const std::string& text, const core::renderer::ScreenPosition& position, const core::renderer::Color& color, const uint32_t scale) override;
 
     void renderFrame() override;
 

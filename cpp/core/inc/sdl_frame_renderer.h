@@ -1,6 +1,6 @@
 #pragma once
 
-#include "layered_renderer.h"
+#include "frame_renderer.h"
 #include "log.h"
 #include "sdl_renderer.h"
 #include "sdl_window.h"
@@ -10,15 +10,15 @@
 
 namespace zbreakout::core::sdl_layered_renderer
 {
-class SDLLayeredRenderer : public layered_renderer::LayeredRenderer
+class SDLLayeredFrameRenderer : public layered_renderer::LayeredFrameRenderer
 {
 public:
-    SDLLayeredRenderer(zbreakout::core::log::Log& log, zbreakout::core::sdl_window::SDLWindow& window) : m_log(log), m_window(window) {}
-    virtual ~SDLLayeredRenderer() = default;
+    SDLLayeredFrameRenderer(zbreakout::core::log::Log& log, zbreakout::core::sdl_window::SDLWindow& window) : m_log(log), m_window(window) {}
+    virtual ~SDLLayeredFrameRenderer() = default;
 
     void renderFrame() override
     {
-        LayeredRenderer::renderFrame();
+        LayeredFrameRenderer::renderFrame();
 
         SDL_RenderPresent(m_sdlRenderer);
     }

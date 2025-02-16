@@ -1,6 +1,7 @@
 #pragma once
 
 // Standard library
+#include <cstdint>
 #include <string>
 
 namespace zbreakout::core::renderer
@@ -64,7 +65,7 @@ public:
      * @param position The top left corner of the text
      * @param color The color of the text
      */
-    virtual void renderText(const std::string& text, const ScreenPosition& position, const Color& color) = 0;
+    virtual void renderText(const std::string& text, const ScreenPosition& position, const Color& color, const uint32_t scale = 1) = 0;
 };
 
 }
