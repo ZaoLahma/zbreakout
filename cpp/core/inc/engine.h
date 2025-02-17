@@ -18,7 +18,7 @@ public:
 
     ~EngineApp() = default;
     
-    virtual void run() = 0;
+    virtual void run(const double timeStep) = 0;
 protected:
     zbreakout::core::log::Log& m_log;
     zbreakout::core::message_broker::MessageBroker& m_messageBroker;

@@ -26,6 +26,7 @@ Breakout::Breakout(
         m_layeredRenderer(renderer), m_resolution(resolution)
 {
     m_layeredRenderer.addLayer(static_cast<std::underlying_type_t<BreakoutRenderLayers>>(BreakoutRenderLayers::Field));
+    m_layeredRenderer.addLayer(static_cast<std::underlying_type_t<BreakoutRenderLayers>>(BreakoutRenderLayers::UI));
 
     if (auto renderer = m_layeredRenderer.getRendererForLayer(0); renderer.has_value())
     {
@@ -34,6 +35,17 @@ Breakout::Breakout(
     else
     {
         m_log.error(__func__, "Failed to get renderer for layer 0");
+
+        return;
+    }
+
+    if (auto renderer = m_layeredRenderer.getRendererForLayer(1); renderer.has_value())
+    {
+        m_uiRenderer = renderer.value();
+    }
+    else
+    {
+        m_log.error(__func__, "Failed to get renderer for layer 1");
 
         return;
     }
@@ -81,7 +93,7 @@ Breakout::Breakout(
         }
     }
 
-    m_breakoutUI = std::make_unique<zbreakout::game::breakout_ui::BreakoutUI>(m_log, m_fieldRenderer, m_resolution);
+    m_breakoutUI = std::make_unique<zbreakout::game::breakout_ui::BreakoutUI>(m_log, m_uiRenderer, m_resolution);
 
     messageBroker.subscribeToMessageType(
         std::type_index(
@@ -137,7 +149,7 @@ bool Breakout::checkBallCollision(
         return distanceSquared <= (ballRadius * ballRadius);
 }
 
-void Breakout::run()
+void Breakout::run(const double timeStep)
 {
     m_breakoutBall->render();
     m_breakoutPaddle->render();

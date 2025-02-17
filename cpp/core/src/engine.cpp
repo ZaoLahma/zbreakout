@@ -58,13 +58,14 @@ void Engine::run()
         while (accumulator >= FIXED_TIMESTEP)
         {
             m_renderer.prepareRenderFrame();
-            m_engineApp.run();
+            m_engineApp.run(FIXED_TIMESTEP);
+            m_renderer.finalizeRenderFrame();
             accumulator -= FIXED_TIMESTEP;
         }
     
         m_renderer.renderFrame();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(16));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
     
         frameCounter++;
         if (frameCounter % TARGET_FPS == 0)

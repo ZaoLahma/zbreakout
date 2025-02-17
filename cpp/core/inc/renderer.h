@@ -33,6 +33,8 @@ public:
      * Call once per frame to render the frame
      */
      virtual void renderFrame() = 0;
+
+     virtual void finalizeRenderFrame() = 0;
 };
 
 class Renderer : public FrameRenderer

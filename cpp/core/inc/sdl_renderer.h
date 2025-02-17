@@ -21,12 +21,14 @@ public:
 
     void prepareRenderFrame() override;
     void renderFrame() override;
+    void finalizeRenderFrame() override;
 
     SDL_Renderer* getSDLRenderer() { return s_sdlRenderer; }
 
 private:
     static void initializeSDLRenderer(zbreakout::core::sdl_window::SDLWindow& window);
 
+    static bool s_frameFinalized;
     static SDL_Renderer* s_sdlRenderer;
 
     zbreakout::core::log::Log& m_log;

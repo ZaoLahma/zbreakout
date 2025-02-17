@@ -9,6 +9,7 @@
 namespace zbreakout::core::sdl_renderer
 {
 
+bool SDLRenderer::s_frameFinalized {false};
 SDL_Renderer* SDLRenderer::s_sdlRenderer {nullptr};
 
 
@@ -231,14 +232,14 @@ std::array<std::bitset<8>, 8> letterR =
 
 std::array<std::bitset<8>, 8> letterS =
 {
-    std::bitset<8>("01111100"), 
-    std::bitset<8>("10000010"), 
-    std::bitset<8>("10000000"), 
-    std::bitset<8>("01111100"), 
-    std::bitset<8>("00000010"), 
-    std::bitset<8>("00000001"), 
-    std::bitset<8>("01111100"), 
-    std::bitset<8>("00000000")   
+    std::bitset<8>("01111100"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("10000000"),
+    std::bitset<8>("01111100"),
+    std::bitset<8>("00000010"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("01111100"),
+    std::bitset<8>("00000000")
 };
 
 std::array<std::bitset<8>, 8> letterT =
@@ -602,6 +603,8 @@ void SDLRenderer::renderText(const std::string& text, const core::renderer::Scre
 
 void SDLRenderer::prepareRenderFrame()
 {
+    s_frameFinalized = false;
+
     SDL_SetRenderTarget(s_sdlRenderer, m_sdlTexture);
     SDL_SetRenderDrawColor(s_sdlRenderer, 0, 0, 0, 255);
     SDL_RenderClear(s_sdlRenderer);
@@ -614,8 +617,15 @@ void SDLRenderer::renderFrame()
     {
         m_log.error(__func__, "SDL_RenderCopy failed: " + std::string(SDL_GetError()));
     }
+}
 
-    SDL_RenderPresent(s_sdlRenderer);
+void SDLRenderer::finalizeRenderFrame()
+{
+    if (!s_frameFinalized)
+    {
+        s_frameFinalized = true;
+        SDL_RenderPresent(s_sdlRenderer);
+    }
 }
 
 void SDLRenderer::initializeSDLRenderer(zbreakout::core::sdl_window::SDLWindow& window)

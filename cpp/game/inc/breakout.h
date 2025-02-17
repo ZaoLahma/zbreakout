@@ -25,7 +25,7 @@ public:
         const zbreakout::core::window::Resolution& resolution);
     ~Breakout() = default;
 
-    void run();
+    virtual void run(const double timeStep) override;
 
 private:
     void processMessage(std::shared_ptr<zbreakout::core::message_broker::MessageBase> message);

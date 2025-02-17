@@ -38,6 +38,15 @@ public:
         }
     }
 
+    void finalizeRenderFrame() override
+    {
+        // Finalize renderers
+        for (const auto& [layer, renderer] : m_layerRenderers)
+        {
+            renderer->finalizeRenderFrame();
+        }
+    }
+
     /**
      * Add a new layer to the renderer - must be called before getRendererForLayer for the layer
      *
