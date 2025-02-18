@@ -459,6 +459,41 @@ std::array<std::bitset<8>, 8> blank =
     std::bitset<8>("00000000")
 };
 
+std::array<std::bitset<8>, 8> period =
+{
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000"), 
+    std::bitset<8>("00111100"), 
+    std::bitset<8>("00111100"), 
+    std::bitset<8>("00000000")
+};
+
+std::array<std::bitset<8>, 8> comma =
+{
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000010"),
+    std::bitset<8>("00000010"),
+    std::bitset<8>("00000100")
+};
+
+std::array<std::bitset<8>, 8> questionMark =
+{
+    std::bitset<8>("01111100"),
+    std::bitset<8>("10000010"),
+    std::bitset<8>("00000010"),
+    std::bitset<8>("00011100"),
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000000"),
+    std::bitset<8>("00000100"),
+    std::bitset<8>("00000000")
+};
 
 std::map<char, std::array<std::bitset<8>, 8>> characterToLetter {
     {'A', letterA},
@@ -499,7 +534,10 @@ std::map<char, std::array<std::bitset<8>, 8>> characterToLetter {
     {'9', letter9},
     {' ', blank},
     {'\n', blank},
-    {'\t', blank}
+    {'\t', blank},
+    {'.', period},
+    {',', comma},
+    {'?', questionMark}
 };
 
 

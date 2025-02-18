@@ -57,20 +57,20 @@ void Engine::run()
 
         while (accumulator >= FIXED_TIMESTEP)
         {
-            m_renderer.prepareRenderFrame();
-            m_engineApp.run(FIXED_TIMESTEP);
-            m_renderer.finalizeRenderFrame();
             accumulator -= FIXED_TIMESTEP;
         }
     
+        m_renderer.prepareRenderFrame();
+        m_engineApp.run(FIXED_TIMESTEP); // This should be separated from the rendering and be done within the accumulator handling above
         m_renderer.renderFrame();
+        m_renderer.finalizeRenderFrame();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     
         frameCounter++;
         if (frameCounter % TARGET_FPS == 0)
         {
-            m_log.info(__func__, "FPS: " + std::to_string(frameCounter));
+            //m_log.info(__func__, "FPS: " + std::to_string(frameCounter));
             frameCounter = 0;
         }
     }

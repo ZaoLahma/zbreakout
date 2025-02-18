@@ -30,6 +30,8 @@ public:
 private:
     void processMessage(std::shared_ptr<zbreakout::core::message_broker::MessageBase> message);
 
+    void initializeObjects();
+
     bool checkBallCollision(
         const zbreakout::core::renderer::ScreenPosition& objectPosition,
         const zbreakout::core::renderer::ScreenPosition& objectSize,

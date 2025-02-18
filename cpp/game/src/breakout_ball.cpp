@@ -82,6 +82,8 @@ void BreakoutBall::updatePosition()
         // Player lose condition - collision with floor
         m_acceleration.x = 0;
         m_acceleration.y = 0;
+
+        m_ballIsInPlay = false;
     }
 
     m_position.x += m_acceleration.x;

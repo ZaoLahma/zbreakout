@@ -50,9 +50,22 @@ Breakout::Breakout(
         return;
     }
 
-    m_breakoutBall = std::make_unique<zbreakout::game::breakout_ball::BreakoutBall>(m_log, m_fieldRenderer, resolution);
     const zbreakout::core::renderer::ScreenPosition position {m_resolution.width / 2, m_resolution.height};
     m_breakoutPaddle = std::make_unique<zbreakout::game::breakout_paddle::BreakoutPaddle>(m_log, m_fieldRenderer, resolution);
+
+    m_breakoutUI = std::make_unique<zbreakout::game::breakout_ui::BreakoutUI>(m_log, m_uiRenderer, m_resolution);
+
+    initializeObjects();
+
+    messageBroker.subscribeToMessageType(
+        std::type_index(
+            typeid(zbreakout::core::user_input::UserKeyInputMessage)),
+            std::bind(&Breakout::processMessage, this, std::placeholders::_1));
+}
+
+void Breakout::initializeObjects()
+{
+    m_breakoutBall = std::make_unique<zbreakout::game::breakout_ball::BreakoutBall>(m_log, m_fieldRenderer, m_resolution);
 
     const int uiHeight {25};
 
@@ -67,6 +80,7 @@ Breakout::Breakout(
     const int totalBlockWidth = numBlockColumns * blockWidth + totalSpacing;
     const int startX = (m_resolution.width - totalBlockWidth) / 2;  // Centering the blocks
 
+    m_breakoutBlocks.clear();
     for (int column {0}; column < numBlockColumns; ++column)
     {
         for (int row {0}; row < numBlockRows; ++row)
@@ -92,13 +106,6 @@ Breakout::Breakout(
             }
         }
     }
-
-    m_breakoutUI = std::make_unique<zbreakout::game::breakout_ui::BreakoutUI>(m_log, m_uiRenderer, m_resolution);
-
-    messageBroker.subscribeToMessageType(
-        std::type_index(
-            typeid(zbreakout::core::user_input::UserKeyInputMessage)),
-            std::bind(&Breakout::processMessage, this, std::placeholders::_1));
 }
 
 void Breakout::processMessage(std::shared_ptr<zbreakout::core::message_broker::MessageBase> message)
@@ -196,6 +203,12 @@ void Breakout::run(const double timeStep)
     for (const auto& block : blocksToRemove)
     {
         m_breakoutBlocks.erase(std::remove(m_breakoutBlocks.begin(), m_breakoutBlocks.end(), block), m_breakoutBlocks.end());
+    }
+
+    if (!m_breakoutBall->ballIsInPlay())
+    {
+        initializeObjects();
+        m_breakoutUI->resetScore();
     }
 }
 
