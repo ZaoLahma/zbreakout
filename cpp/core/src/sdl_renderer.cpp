@@ -12,8 +12,13 @@ namespace zbreakout::core::sdl_renderer
 bool SDLRenderer::s_frameFinalized {false};
 SDL_Renderer* SDLRenderer::s_sdlRenderer {nullptr};
 
-
-// Craziness : Define a font using bitmaps instead of TTF
+/*
+ * Now why would you go ahead and do this? Well, because I really
+ * did not want to deal with dragging the SDL_ttf lib into this
+ * for just printing text to the damn screen.
+ *
+ * Kids, don't do it this way - just use SDL_ttf.
+*/
 std::array<std::bitset<8>, 8> letterA =
 {
     std::bitset<8>("00111100"), 
@@ -616,14 +621,14 @@ void SDLRenderer::renderText(const std::string& text, const core::renderer::Scre
         {
             for (int y = 0; y < 8; ++y)
             {
-                for (int x = 7; x >= 0; --x)  // Loop from right to left (from 7 to 0)
+                for (int x = 7; x >= 0; --x)
                 {
                     if (letter->second[y][x])
                     {
                         // Handle scale
                         rect.w = scale;
                         rect.h = scale;
-                        rect.x = position.x + (7 - x) + charCounter * 8 * scale;  // Adjust x to account for reversed rendering
+                        rect.x = position.x + (7 - x) * scale + charCounter * 8 * scale;
                         rect.y = position.y + y * scale;
                         SDL_RenderFillRect(s_sdlRenderer, &rect);
                     }
